@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
+// REMOVED: @RequestMapping("/api/auth") from here
 public class AuthController {
 
     @Autowired
@@ -29,13 +29,13 @@ public class AuthController {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @PostMapping("/check-username")
+    @PostMapping("/api/auth/check-username") // UPDATED: Full path here
     public ResponseEntity<?> checkUsername(@RequestBody Map<String, String> payload) {
         boolean exists = userRepository.findByUsername(payload.get("username")).isPresent();
         return ResponseEntity.ok(Map.of("exists", exists));
     }
 
-    @PostMapping("/register")
+    @PostMapping("/api/auth/register") // UPDATED: Full path here
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
@@ -45,7 +45,7 @@ public class AuthController {
         return ResponseEntity.ok("User registered successfully!");
     }
 
-    @PostMapping("/login")
+    @PostMapping("/api/auth/login") // UPDATED: Full path here
     public ResponseEntity<?> createAuthenticationToken(@RequestBody User loginRequest) throws Exception {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
