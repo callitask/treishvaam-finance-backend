@@ -43,7 +43,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(request -> {
             CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedOrigins(List.of("http://localhost:3000"));
+            // EDITED LINE: Added your deployed frontend domains
+            config.setAllowedOrigins(List.of("http://localhost:3000", "http://udaybhai.com", "https://udaybhai.com"));
             config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
             config.setAllowedHeaders(List.of("*"));
             config.setAllowCredentials(true);
